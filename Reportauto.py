@@ -42,6 +42,18 @@ with tabs[0]:
 
         st.success(f"✅ Đã xử lý và lưu file tại: {output_path}")
 
+        # Cho phép tải trực tiếp file sau xử lý
+        output_buffer = BytesIO()
+        wb_target.save(output_buffer)
+        output_buffer.seek(0)
+
+        st.download_button(
+            label="📥 Tải file tổng hợp đã xử lý",
+            data=output_buffer,
+            file_name=f"Tong_hop_ket_qua_den_ngay_{today_str}.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
 # ================= Tab 2: Đánh giá và phân tích =================
 with tabs[1]:
     st.header("📊 Đánh giá và phân tích kết quả kiểm tra")
