@@ -165,11 +165,11 @@ with tabs[1]:
             for _, row in df_cleaned.iterrows():
                 r = table_eval.add_row().cells
                 r[0].text = str(row['Điện lực'])
-                r[1].text = f"{int(row['Tổng công tơ']) if pd.notna(row['Tổng công tơ']) else 'N/A'}"
-                r[2].text = f"{int(row['Kế hoạch']) if pd.notna(row['Kế hoạch']) else 'N/A'}"
-                r[3].text = f"{row['Tỷ lệ']:.2f}%" if pd.notna(row['Tỷ lệ']) else 'N/A'
-                r[4].text = f"{row['Dự báo tỷ lệ']:.2f}%" if pd.notna(row['Dự báo tỷ lệ']) else 'N/A'
-                r[5].text = row['Kết luận']
+                r[1].text = f"{int(row['Tổng công tơ']) if pd.notna(row['Tổng công tơ']) and not pd.isna(row['Tổng công tơ']) else 'N/A'}"
+                r[2].text = f"{int(row['Kế hoạch']) if pd.notna(row['Kế hoạch']) and not pd.isna(row['Kế hoạch']) else 'N/A'}"
+                r[3].text = f"{row['Tỷ lệ']:.2f}%" if pd.notna(row['Tỷ lệ']) and not pd.isna(row['Tỷ lệ']) else 'N/A'
+                r[4].text = f"{row['Dự báo tỷ lệ']:.2f}%" if pd.notna(row['Dự báo tỷ lệ']) and not pd.isna(row['Dự báo tỷ lệ']) else 'N/A'
+                r[5].text = row['Kết luận'] if pd.notna(row['Kết luận']) else 'N/A'
 
                 if row['Kết luận'] == 'Không đạt':
                     for cell in r:
