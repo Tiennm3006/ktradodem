@@ -22,7 +22,11 @@ with tabs[0]:
     uploaded_template = st.file_uploader("📂 Tải lên file mẫu tổng hợp (Tong hop ket qua ktra dinh ky)", type=["xlsx"], key="template")
 
     if uploaded_source and uploaded_template:
-        wb_source = openpyxl.load_workbook(uploaded_source)
+        from tempfile import NamedTemporaryFile
+        with NamedTemporaryFile(delete=False, suffix=".xlsx") as tmp:
+            tmp.write(uploaded_source.read())
+            tmp_path = tmp.name
+        wb_source = openpyxl.load_workbook(tmp_path, data_only=True)
         ws_source = wb_source.active
 
         wb_target = openpyxl.load_workbook(uploaded_template)
@@ -53,6 +57,7 @@ with tabs[0]:
             file_name=f"Tong_hop_ket_qua_den_ngay_{today_str}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
 
 # ================= Tab 2: Đánh giá và phân tích =================
 with tabs[1]:
